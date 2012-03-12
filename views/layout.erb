@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title><%= settings.title %> | <%= @title %></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </head>
+
+  <body> 
+
+    <div class="container">
+
+
+
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+
+            <a href="/" class="brand">Weight Tracker</a>
+
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/history">History</a></li>
+              <li><a href="/settings">Settings</a></li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+
+      <%= flash.inspect %>
+
+      <% if flash[:good] %>
+        <div class="alert alert-success">
+          <a class="close" data-dismiss="alert">x</a>
+          <strong>New weight added!</strong> You are <%= flash[:good] %> kg less than last time. Good stuff!
+        </div>
+      <% end %>
+
+      <% if flash[:error] %>
+        <div class="alert alert-error">
+          <a class="close" data-dismiss="alert">x</a>
+          <strong>BOOM!</strong> <%= flash[:error] %>
+        </div>
+      <% end %>
+
+
+      <%= yield %>
+
+
+    </div> <!-- main container -->
+
+  </body>
+</html>

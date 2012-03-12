@@ -1,0 +1,84 @@
+@mixin border-radius($radius:3px)
+  :-moz-border-radius $radius
+  :-webkit-border-radius $radius
+  :border-radius $radius
+
+@mixin border-radius-left($radius:3px)
+  :border-top-left-radius $radius
+  :-moz-border-radius-topleft $radius
+  :-webkit-border-top-left-radius $radius
+  :border-bottom-left-radius $radius
+  :-moz-border-radius-bottomleft $radius
+  :-webkit-border-bottom-left-radius $radius
+
+
+@mixin linear-gradient($from:rgba(255,255,255,1.0), $to:rgba(0,0,0,1.0))
+  :background -moz-linear-gradient(top,$from,$to)
+  :background -webkit-gradient(linear,left top, left bottom, from($from), to($to))
+  :background linear-gradient(top,$from,$to)
+
+@mixin translate($x: 0px, $y: 100px)
+  :-moz-transform translate($x, $y)
+  :-webkit-transform translate($x, $y)
+  :transform translate($x, $y)
+
+@mixin skew($x: 30deg, $y: 0deg)
+  :-moz-transform skew($x, $y)
+  :-webkit-transform skew($x, $y)
+  :transform skew($x, $y)
+
+@mixin scale($scale: 1.5)
+  :-moz-transform scale($scale)
+  :-webkit-transform scale($scale)
+  :transform scale($scale)
+
+@mixin rotate($degree: 0deg)
+  :-moz-transform rotate($degree)
+  :-webkit-transform rotate($degree)
+  :transform rotate($degree)
+
+@mixin rotateX($degree: 0deg)
+  :-moz-transform rotateX($degree)
+  :-webkit-transform rotateX($degree)
+  :transform rotateX($degree)
+
+@mixin rotateY($degree: 0deg)
+  :-moz-transform rotateY($degree)
+  :-webkit-transform rotateY($degree)
+  :transform rotateY($degree)
+
+@mixin rotateZ($degree: 0deg)
+  :-moz-transform rotateZ($degree)
+  :-webkit-transform rotateZ($degree)
+  :transform rotateZ($degree)
+
+@mixin transform-origin($h: center, $v: center)
+  :-moz-transform-origin $h $v
+  :-webkit-transform-origin $h $v
+  :-o-transform-origin $h $v
+  :-ms-transform-origin $h $v
+
+@mixin transition($property: all, $speed: 0.5s, $easing: ease)
+  :-webkit-transition $property $speed $easing
+  :-moz-transition $property $speed $easing
+  :-o-transition $property $speed $easing
+  :transition $property $speed $easing
+
+@mixin boxshadow($x: 3px, $y: 3px, $shade: 5px, $spread: 0px, $color: #777)
+  :-webkit-box-shadow $x $y $shade $spread $color
+  :-moz-box-shadow $x $y $shade $spread $color
+  :box-shadow $x $y $shade $spread $color
+
+@mixin boxgradient($from: #444444, $to: #999999)
+  :background-color $from
+  :background-image -webkit-gradient(linear, left top, left bottom, from($from), to($to))
+  :background-image -webkit-linear-gradient(top, from($from), to($to))
+  :background-image -moz-linear-gradient(top, from($from), to($to))
+  :background-image -ms-linear-gradient(top, from($from), to($to))
+  :background-image -o-linear-gradient(top, from($from), to($to))
+  :background-image linear-gradient(top, from($from), to($to))
+
+@mixin box()
+  :display -webkit-box
+  :display -moz-box
+  :display box
