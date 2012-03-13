@@ -1,35 +1,44 @@
 class Application < Sinatra::Base
-  enable :sessions
-  register Sinatra::Flash
 
   get "/" do
-    @weights = WeightStore.all      
+    @weights = Weighin.last_x_days(7)      
     erb :index
   end
 
   post "/new" do
-    weight = WeightStore.create({:kg => params[:kg]})
+    weight = Weighin.create({:kg => params[:kg]})
     if weight.save
-      flash[:good] = "0.3"
       redirect "/"
     else
-      flash[:error] = "Didn't save for some reason"
       redirect "/"
     end
   end
 
-  get "/delete/:id" do
-    if WeightStore.get(params[:id]).destroy
-      flash[:deleted] = params[:id]
+  get "/history/:range" do
+    if params[:range] =~ /^[-+]?[0-9]+$/
+      @history_title = "Last #{params[:range]} days..."
+      @weights = Weighin.last_x_days(params[:range].to_i)
     else
-      flash[:error] = "Didn't delete for some reason"
+      @history_title = "Entire history..."
+      @weights = Weighin.all(:order => [:created_at.desc])
     end
+    erb :history
+  end
+  
+  get "/delete/:id" do
+    Weighin.get(params[:id]).destroy
     redirect "/"
   end
 
-  # get "/css/main.css" do
-  #   sass :main, {:load_paths => ["public/css"]}
-  # end
+  get "/edit/:id/:kg" do
+    weight = Weighin.get(params[:id].to_i)
+    weight.update(:kg => params[:kg])
+    redirect "/"
+  end
+
+  get "/css/main.css" do
+    sass :main, {:load_paths => ["public/css"]}
+  end
 
   get "/js/main.js" do
     coffee :main

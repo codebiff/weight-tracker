@@ -1,4 +1,4 @@
-<div class="hero-unit" style="background: #4CB1CE">
+<div class="hero-unit">
 
   <% if !@weights.empty? %>
 
@@ -19,7 +19,7 @@
   
   </form>
 
-</div>
+</div> <!-- heor-unit -->
 
 
 <% if !@weights.empty? %>
@@ -30,7 +30,7 @@
       <h4><%= start_weight %> kg</h4>
     </div>
 
-    <div class="progress progress-info progress-striped active span10">
+    <div class="progress progress-info progress-striped span10">
       <div class="bar" style="width: <%= weight_loss_progress %>%;"></div>
     </div>
 
@@ -44,7 +44,7 @@
 
   <% if ! @weights.empty? %>
     <div class="clearfix">
-      <h3>The last 7 days... <a class="btn btn-mini" href="/"><i class="icon-cog"></i> Graph</a></h3>
+      <h3>The last 7 days...</h3>
 
       <table class="table table-striped">
         
@@ -61,7 +61,7 @@
 
         <tbody>
 
-          <% for weight in @weights.reverse %>
+          <% for weight in @weights %>
 
             <tr>
               <td><%= tidy_date(weight.created_at) %></td>
@@ -70,7 +70,7 @@
               <td><%= weight.stone %></td>
               <td><%= weight.bmi %>%<span></td>
               <td>
-                <a class="btn btn-mini"href="/edit/<%= weight.id %>">Edit</a>
+                <a class="edit btn btn-mini" data-id="<%= weight.id %>" href="#">Edit</a>
                 <a class="delete btn btn-mini btn-danger" data-id="<%= weight.id %>" href="#">Delete</a>
               </td>
             </tr>
@@ -80,6 +80,8 @@
         </tbody>
 
       </table>
+
+      <img src="<%= graph(@weights.reverse) %>">
 
       <div class="modal fade" id="deleteModal">
         <div class="modal-header">
@@ -91,7 +93,25 @@
         </div>
         <div class="modal-footer">
           <a href="#" class="btn btn-danger">Delete</a>
-          <a href="#" class="btn">Close</a>
+          <a href="#" class="btn btn-close">Close</a>
+        </div>
+      </div>
+
+      <div class="modal fade" id="editModal">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>Edit entry</h3>
+        </div>
+        <div class="modal-body">
+          <p>Enter new weight in Kg</p>
+          <form class="form-inline">
+            <input id="edit_kg" type="text" class="input-small" placeholder="Weight in Kg" name="kg">
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-primary">Edit</a>
+          <a href="#" class="btn btn-close">Close</a>
         </div>
       </div>
 

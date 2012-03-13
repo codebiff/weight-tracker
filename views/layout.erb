@@ -29,7 +29,14 @@
 
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
-              <li><a href="/history">History</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">History<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/history/7">Last 7 days</a></li>
+                  <li><a href="/history/30">Last Month</a></li>
+                  <li><a href="/history/all">All Time</a></li>
+                </ul>
+              </li>
               <li><a href="/settings">Settings</a></li>
             </ul>
 
@@ -37,21 +44,6 @@
         </div>
       </div>
 
-      <%= flash.inspect %>
-
-      <% if flash[:good] %>
-        <div class="alert alert-success">
-          <a class="close" data-dismiss="alert">x</a>
-          <strong>New weight added!</strong> You are <%= flash[:good] %> kg less than last time. Good stuff!
-        </div>
-      <% end %>
-
-      <% if flash[:error] %>
-        <div class="alert alert-error">
-          <a class="close" data-dismiss="alert">x</a>
-          <strong>BOOM!</strong> <%= flash[:error] %>
-        </div>
-      <% end %>
 
 
       <%= yield %>

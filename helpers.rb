@@ -29,27 +29,36 @@ class Application < Sinatra::Base
     end
 
     def weight_loss
-      (WeightStore.first.kg - WeightStore.last.kg).round(1)
+      (Weighin.first.kg - Weighin.last.kg).round(1)
     end
 
     def current_weight
-      WeightStore.last.kg
+      Weighin.last.kg
     end
 
     def start_weight
-      WeightStore.first.kg
+      Weighin.first.kg
     end
 
     def goal
-      79
+      settings.weight_goal
     end
 
     def weight_loss_progress
-      (start_weight - current_weight) * (100 / (start_weight - goal))
+      return 100 if current_weight <= goal
+      ((start_weight - current_weight) * (100 / (start_weight - goal))).floor
     end
 
     def weight_diff_from_last_time
       0.3
+    end
+
+    def graph(weights)
+      x_labels = weights.map{|w| w.created_at.strftime("%d %b")}.join("|")
+      y_min    = weights.min_by{|w| w.kg }.kg - 0.5
+      y_max    = weights.max_by{|w| w.kg }.kg + 0.5
+      data     = weights.map{|w| w.kg}.join(",")
+      "http://chart.googleapis.com/chart?cht=lc&chs=960x300&chxt=x,y&chxr=1,#{y_min},#{y_max}&chd=t:0|#{data}&chds=#{y_min},#{y_max}&chls=5&chxl=0:|  #{x_labels}&chg=10,10"
     end
 
   end
