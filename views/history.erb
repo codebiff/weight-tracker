@@ -4,41 +4,42 @@
 
     <img src="<%= graph(@weights.reverse) %>">
 
-
     <table class="table table-striped">
-      
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Kg</th>
-          <th>Lbs</th>
-          <th>Stone</th>
-          <th>BMI</th>
-          <th></th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <% for weight in @weights %>
-
+        
+        <thead>
           <tr>
-            <td><%= tidy_date(weight.created_at) %></td>
-            <td><%= weight.kg %> kg</td>
-            <td><%= weight.lbs %> lbs</td>
-            <td><%= weight.stone %></td>
-            <td><%= weight.bmi %>%<span></td>
-            <td>
-              <a class="btn btn-mini"href="/edit/<%= weight.id %>">Edit</a>
-              <a class="delete btn btn-mini btn-danger" data-id="<%= weight.id %>" href="#">Delete</a>
-            </td>
+            <th>Date</th>
+            <th>Kg</th>
+            <th>Lbs</th>
+            <th>Stone</th>
+            <th>BMI</th>
+            <th></th>
           </tr>
+        </thead>
 
-        <% end %>
-      
-      </tbody>
+        <tbody>
 
-    </table>
+          <% for entry in @weights %>
+
+            <% weight = WeightConverter.new(entry.kg) %>
+
+            <tr>
+              <td><%= tidy_date(entry.created_at) %></td>
+              <td><%= weight.kg %> kg</td>
+              <td><%= weight.lbs %> lbs</td>
+              <td><%= weight.stone[:string] %></td>
+              <td><%= weight.bmi %>%<span></td>
+              <td>
+                <a class="edit btn btn-mini" data-id="<%= entry.id %>" href="#">Edit</a>
+                <a class="delete btn btn-mini btn-danger" data-id="<%= entry.id %>" href="#">Delete</a>
+              </td>
+            </tr>
+
+          <% end %>
+        
+        </tbody>
+
+      </table>
 
     <div class="modal fade" id="deleteModal">
       <div class="modal-header">

@@ -43,6 +43,9 @@
 <% end %>
 
   <% if ! @weights.empty? %>
+    
+    <% prev_kg = 0 %>
+
     <div class="clearfix">
       <h3>The last 7 days...</h3>
 
@@ -61,17 +64,21 @@
 
         <tbody>
 
-          <% for weight in @weights %>
+          <% @weights.each_with_index do |entry, index| %>
+
+            <% weight  = WeightConverter.new(entry.kg) %>
+            <% prev_kg = ((index+1) < @weights.count) ? @weights[index+1].kg : weight.kg %>
+            <% diff    = weight_diff(weight.kg, prev_kg) %>
 
             <tr>
-              <td><%= tidy_date(weight.created_at) %></td>
-              <td><%= weight.kg %> kg</td>
-              <td><%= weight.lbs %> lbs</td>
-              <td><%= weight.stone %></td>
-              <td><%= weight.bmi %>%<span></td>
+              <td><%= tidy_date(entry.created_at) %></td>
+              <td><%= weight.kg %> kg <span class="label <%= diff.label %>"> <%= diff.kg %></span></td>
+              <td><%= weight.lbs %> lbs <span class="label <%= diff.label %> "> <%= diff.lbs %></span></td>
+              <td><%= weight.stone[:string] %> <span class="label <%= diff.label %> "> <%= diff.lbs %></span></td>
+              <td><%= weight.bmi %>% <span class="label <%= diff.label %>"> <%= diff.bmi %>%</span></td>
               <td>
-                <a class="edit btn btn-mini" data-id="<%= weight.id %>" href="#">Edit</a>
-                <a class="delete btn btn-mini btn-danger" data-id="<%= weight.id %>" href="#">Delete</a>
+                <a class="edit btn btn-mini" data-id="<%= entry.id %>" href="#">Edit</a>
+                <a class="delete btn btn-mini btn-danger" data-id="<%= entry.id %>" href="#">Delete</a>
               </td>
             </tr>
 

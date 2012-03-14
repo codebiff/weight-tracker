@@ -29,15 +29,15 @@ class Application < Sinatra::Base
     end
 
     def weight_loss
-      (Weighin.first.kg - Weighin.last.kg).round(1)
+      ( WeightConverter.new(Weighin.first.kg).kg - WeightConverter.new(Weighin.last.kg).kg ).round(1)
     end
 
     def current_weight
-      Weighin.last.kg
+      WeightConverter.new(Weighin.last.kg).kg
     end
 
     def start_weight
-      Weighin.first.kg
+      WeightConverter.new(Weighin.first.kg).kg
     end
 
     def goal
@@ -49,16 +49,29 @@ class Application < Sinatra::Base
       ((start_weight - current_weight) * (100 / (start_weight - goal))).floor
     end
 
-    def weight_diff_from_last_time
-      0.3
+    def weight_diff(now, prev)
+      diff = WeightConverter.new( WeightConverter.new(now).kg - WeightConverter.new(prev).kg ) 
+      case 
+      when diff.kg < 0
+        diff.label = "label-success"
+      when diff.kg > 0
+        diff.label = "label-important"
+      else
+        diff.label = ""
+      end
+      diff
     end
 
     def graph(weights)
       x_labels = weights.map{|w| w.created_at.strftime("%d %b")}.join("|")
       y_min    = weights.min_by{|w| w.kg }.kg - 0.5
       y_max    = weights.max_by{|w| w.kg }.kg + 0.5
-      data     = weights.map{|w| w.kg}.join(",")
+      data     = weights.map{|w| WeightConverter.new(w.kg).kg}.join(",")
       "http://chart.googleapis.com/chart?cht=lc&chs=960x300&chxt=x,y&chxr=1,#{y_min},#{y_max}&chd=t:0|#{data}&chds=#{y_min},#{y_max}&chls=5&chxl=0:|  #{x_labels}&chg=10,10"
+    end
+
+    def weightconverter(kg)
+      Weightconverter.new(kg)
     end
 
   end

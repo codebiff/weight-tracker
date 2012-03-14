@@ -11,6 +11,7 @@ require "coffee_script"
 
 # Monkey pathes
 require "./lib/fixnum"
+require "./lib/weight_converter"
 
 # The App
 require "settings"
