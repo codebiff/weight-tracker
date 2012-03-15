@@ -3,6 +3,8 @@
   <% if !@weights.empty? %>
 
     <h1>Current loss: <%= weight_loss %> kg</h1>
+    <br>
+    <p><strong><%= weight_loss_progress %> kg</strong> left to go till your goal of <strong><%= goal %> kg</strong></p>
     <p>You were <strong><%= current_weight %> kg</strong>. So how much do you weight now, fatboy?</p>
 
   <% else %>
@@ -19,7 +21,7 @@
   
   </form>
 
-</div> <!-- heor-unit -->
+</div> <!-- hero-unit -->
 
 
 <% if !@weights.empty? %>
@@ -31,7 +33,7 @@
     </div>
 
     <div class="progress progress-info progress-striped span10">
-      <div class="bar" style="width: <%= weight_loss_progress %>%;"></div>
+      <div class="bar" style="width: <%= weight_loss_progress_percentage %>%;"></div>
     </div>
 
     <div class="span1">
