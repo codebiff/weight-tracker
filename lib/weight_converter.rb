@@ -9,7 +9,7 @@ class WeightConverter
 	end
 
 	def lbs
-		@lbs = (@kg*2.2).floor
+		@lbs = (@kg*2.20462262185).floor
 	end
 
 	def stone

@@ -29,7 +29,7 @@ class Application < Sinatra::Base
     end
 
     def weight_loss
-      ( WeightConverter.new(Weighin.first.kg).kg - WeightConverter.new(Weighin.last.kg).kg ).round(1)
+      WeightConverter.new(Weighin.first.kg).kg - WeightConverter.new(Weighin.last.kg).kg
     end
 
     def current_weight
@@ -50,16 +50,17 @@ class Application < Sinatra::Base
     end
 
     def weight_diff(now, prev)
-      diff = WeightConverter.new( WeightConverter.new(now).kg - WeightConverter.new(prev).kg ) 
+      diff        = WeightConverter.new( now - prev )
+      diff_lbs    = ( WeightConverter.new(now).lbs - WeightConverter.new(prev).lbs )
       case 
       when diff.kg < 0
-        diff.label = "label-success"
+        diff_label = "label-success"
       when diff.kg > 0
-        diff.label = "label-important"
+        diff_label = "label-important"
       else
-        diff.label = ""
+        diff_label = ""
       end
-      diff
+      OpenStruct.new(:kg => diff.kg, :lbs => diff_lbs, :bmi => diff.bmi, :label => diff_label)
     end
 
     def graph(weights)
