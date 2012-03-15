@@ -7,7 +7,7 @@ class Weighin
   
   property :id, 		  			Serial
   property :kg, 		  			Float
-  property :created_at, 	  DateTime
+  property :created_at, 	  Date
 
   def self.last_x_days days
     all(:created_at.gte => Time.now - (days*(60*60*24)), :order => [:created_at.desc] )

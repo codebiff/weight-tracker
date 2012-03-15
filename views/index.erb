@@ -5,7 +5,6 @@
     <h1>Current loss: <%= weight_loss %> kg</h1>
     <br>
     <p><strong><%= weight_loss_progress %> kg</strong> left to go till your goal of <strong><%= goal %> kg</strong></p>
-    <p>You were <strong><%= current_weight %> kg</strong>. So how much do you weight now, fatboy?</p>
 
   <% else %>
 
@@ -16,9 +15,8 @@
 
   <form class="form-inline" action="/new" method="post">
     
-      <input type="text" class="input-small" placeholder="Weight in Kg" name="kg">
-      <button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Add</button>
-  
+      <input type="text" class="input-small" placeholder="Weight in Kg" name="kg" <%= today_entered? %>>
+      <button type="submit" class="btn btn-success <%= today_entered? %>" <%= today_entered? %>><i class="icon-plus icon-white"></i> Add</button>
   </form>
 
 </div> <!-- hero-unit -->

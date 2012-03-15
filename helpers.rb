@@ -28,6 +28,11 @@ class Application < Sinatra::Base
       erb(template, :layout => false, :locals => locals)
     end
 
+    def today_entered?
+      return "disabled" if Weighin.first(:created_at.gte => Time.now)
+      nil
+    end
+
     def weight_loss
       (WeightConverter.new(Weighin.first.kg).kg - WeightConverter.new(Weighin.last.kg).kg).round(1)
     end
