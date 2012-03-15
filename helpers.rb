@@ -29,7 +29,7 @@ class Application < Sinatra::Base
     end
 
     def weight_loss
-      WeightConverter.new(Weighin.first.kg).kg - WeightConverter.new(Weighin.last.kg).kg
+      (WeightConverter.new(Weighin.first.kg).kg - WeightConverter.new(Weighin.last.kg).kg).round(1)
     end
 
     def current_weight
