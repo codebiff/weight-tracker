@@ -31,8 +31,7 @@ class Application < Sinatra::Base
   end
 
   get "/edit/:id/:kg" do
-    weight = Weighin.get(params[:id].to_i)
-    weight.update(:kg => params[:kg])
+    weight = Weighin.get(params[:id].to_i).update(:kg => params[:kg])
     redirect "/"
   end
 

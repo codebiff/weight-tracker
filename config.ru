@@ -1,7 +1,6 @@
 $:.unshift File.dirname(__FILE__)
 
 require "sinatra/base"
-
 require "sass"
 require "coffee_script"
 
